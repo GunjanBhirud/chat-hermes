@@ -10,7 +10,7 @@ from ..schemas.chat import MessageCreate, MessageResponse
 from ..models.conversation import Conversation
 from ..models.message import Message
 from ..db.session import get_db
-from ..llm.ollama import get_llm_provider
+from ..llm.openai_compatible import get_llm_provider
 from ..clients.document_service import retrieve_chunks
 from ..prompts.document_qa import SYSTEM_PROMPT_TEMPLATE, build_context_string
 

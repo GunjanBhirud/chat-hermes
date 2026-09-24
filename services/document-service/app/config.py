@@ -7,9 +7,11 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5433/document_chat"
     storage_path: str = "/tmp/documents"
     max_file_size_mb: int = 50
-    embedding_provider: str = "ollama"
-    embedding_model: str = "mxbai-embed-large"
-    embedding_dimensions: int = 1024
+    embedding_provider: str = "openrouter"
+    embedding_base_url: str = "https://openrouter.ai/api/v1"
+    embedding_model: str = "text-embedding-ada-002"
+    embedding_api_key: str = ""
+    embedding_dimensions: int = 1536
     chunk_size: int = 900
     chunk_overlap: int = 120
 
