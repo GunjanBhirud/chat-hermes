@@ -46,6 +46,18 @@ export const ChatContainer: React.FC = () => {
       body: JSON.stringify({ content: input })
     }).then(async response => {
       setInput('');
+      
+      if (!response.ok) {
+         try {
+             const errorData = await response.json();
+             setMessages(prev => [...prev, { role: 'assistant', content: 'Connection Error: ' + (errorData.detail || 'Service unavailable') }]);
+         } catch {
+             setMessages(prev => [...prev, { role: 'assistant', content: 'Connection Error: Failed to reach the service.' }]);
+         }
+         setIsStreaming(false);
+         return;
+      }
+
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       

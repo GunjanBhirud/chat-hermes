@@ -57,8 +57,9 @@ async def process_document(document_id: uuid.UUID, db: AsyncSession):
         doc.chunk_count = len(chunks)
         await db.commit()
     except Exception as e:
+        await db.rollback()
         logger.error(f"Error processing doc {document_id}: {e}")
         doc.status = "FAILED"
         doc.error_code = "PROCESS_ERROR"
-        doc.error_message = str(e)
+        doc.error_message = str(e)[:250]
         await db.commit()
