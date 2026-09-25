@@ -9,9 +9,9 @@ class Settings(BaseSettings):
     max_file_size_mb: int = 50
     embedding_provider: str = "openrouter"
     embedding_base_url: str = "https://openrouter.ai/api/v1"
-    embedding_model: str = "text-embedding-ada-002"
+    embedding_model: str = "nvidia/nemotron-3-embed-1b:free"
     embedding_api_key: str = ""
-    embedding_dimensions: int = 1536
+    embedding_dimensions: int = 2048
     chunk_size: int = 900
     chunk_overlap: int = 120
 
