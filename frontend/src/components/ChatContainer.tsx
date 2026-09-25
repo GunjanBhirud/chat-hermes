@@ -41,7 +41,7 @@ export const ChatContainer: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer mocked_token"
+        "Authorization": "Bearer 00000000-0000-0000-0000-000000000000"
       },
       body: JSON.stringify({ content: input })
     }).then(async response => {
