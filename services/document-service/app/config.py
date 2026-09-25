@@ -4,7 +4,7 @@ from urllib.parse import quote_plus
 
 class Settings(BaseSettings):
     app_env: str = "development"
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5433/document_chat"
+    database_url: str = "postgresql+asyncpg://postgres:postgres@127.0.0.1:5433/document_chat"
     storage_path: str = "/tmp/documents"
     max_file_size_mb: int = 50
     embedding_provider: str = "openrouter"
