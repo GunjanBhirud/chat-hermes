@@ -44,10 +44,17 @@ async def create_message(
     provider = get_llm_provider()
     
     # Embed question
-    query_embedding = await provider.embed(payload.content)
+    try:
+        query_embedding = await provider.embed(payload.content)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
     # Retrieve chunks
-    chunks = await retrieve_chunks(doc_ids, query_embedding, top_k=5)
+    try:
+        chunks = await retrieve_chunks(doc_ids, query_embedding, top_k=5)
+    except Exception as e:
+        # Fallback to no chunks instead of crashing the whole chat if retrieval times out
+        chunks = []
     chunk_ids = [uuid.UUID(c["chunk_id"]) for c in chunks]
     
     context_str = build_context_string(chunks)
