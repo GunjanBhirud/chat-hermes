@@ -37,17 +37,18 @@ async def process_document(document_id: uuid.UUID, db: AsyncSession):
         chunks = chunk_sections(sections)
         embed_provider = get_embedding_provider()
         
+        texts = [c.text for c in chunks]
+        # Batch request to avoid 429 limits on free OpenRouter tier
+        vectors = await embed_provider.embed_batch(texts)
+        
         for i, chunk in enumerate(chunks):
-            # ponyial: seq loop over embeddings, consider asyncio.gather for speed when needed.
-            vector = await embed_provider.embed_text(chunk.text)
-            
             db_chunk = DocumentChunk(
                 id=uuid.uuid4(),
                 document_id=doc.id,
                 owner_id=doc.owner_id,
                 chunk_index=i,
                 content=chunk.text,
-                embedding=vector,
+                embedding=vectors[i],
                 page_start=chunk.page,
                 page_end=chunk.page
             )
